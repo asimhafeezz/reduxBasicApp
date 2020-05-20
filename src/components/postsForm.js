@@ -1,10 +1,14 @@
 import React, { useState } from 'react'
-import { connect } from 'react-redux'
-import { newPost } from '../actions/postActions'
-const NewPost = (props) => {
+import { useSelector} from 'react-redux'
+import useActions from '../actions/postActions'
+
+export default () => {
 
     const [title , settitle] = useState('')
-    const [body , setbody] = useState('')
+    const [body, setbody] = useState('')
+    
+    let {newPost} = useActions()
+    let post = useSelector(state => state.posts.item)
 
     let onFormSubmit = (e) => {
         e.preventDefault()
@@ -14,9 +18,9 @@ const NewPost = (props) => {
         }
         console.log('action called')
 
-        props.newPost(postData)
+        newPost(postData)
 
-        console.log(props.post)
+        console.log(post)
 
     }
 
@@ -37,8 +41,8 @@ const NewPost = (props) => {
     )
 }
 
-const mapStateToProps = state => ({
-    post: state.posts.item
-})
+// const mapStateToProps = state => ({
+//     post: state.posts.item
+// })
 
-export default connect(mapStateToProps , { newPost })(NewPost)
+// export default connect(mapStateToProps , { newPost })(NewPost)

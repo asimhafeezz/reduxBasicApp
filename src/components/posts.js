@@ -1,11 +1,14 @@
 import React, { useEffect }from 'react'
-import { connect } from 'react-redux'
-import { fetchPosts } from '../actions/postActions'
+import { useSelector } from 'react-redux'
+import useActions from '../actions/postActions'
 
-const Posts = (props) => {
+const Posts = () => {
+
+    let {fetchPosts} = useActions()
+    let posts = useSelector(state => state.posts.items)
 
     useEffect(() => {
-        props.fetchPosts()
+        fetchPosts()
     } , [])
 
     return (
@@ -13,7 +16,7 @@ const Posts = (props) => {
             
             <h1>Posts:</h1>
             {
-                props.posts.map((post) => {
+                posts.map((post) => {
                     return (
                         <div key={post.id}>
                             <h3>{post.title}</h3>
@@ -28,8 +31,9 @@ const Posts = (props) => {
 }
 
 
-const mapStateToProps = state => ({
-    posts: state.posts.items
-})
+// const mapStateToProps = state => ({
+//     posts: state.posts.items
+// })
 
-export default connect(mapStateToProps , { fetchPosts })(Posts)
+// export default connect(mapStateToProps , { fetchPosts })(Posts)
+export default Posts
